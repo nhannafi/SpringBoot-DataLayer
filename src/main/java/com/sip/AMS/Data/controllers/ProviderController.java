@@ -30,10 +30,18 @@ public class ProviderController {
         return "provider/listProviders";
     }
     
+//    @GetMapping("add")
+//    public String showAddProviderForm(Provider provider) {
+//        return "provider/addProvider";
+//    }
     @GetMapping("add")
-    public String showAddProviderForm(Provider provider) {
-        return "provider/addProvider";
+    public String showAddProviderForm(Model model) {
+    	 Provider provider = new Provider();
+    	 model.addAttribute("provider", provider);
+    	 return "provider/addProvider";
     }
+   
+
     
     @PostMapping("add")
     public String addProvider(@Valid Provider provider, BindingResult result, Model model) {
@@ -54,24 +62,24 @@ public class ProviderController {
 //    }
 //    
 //    
-//    @GetMapping("edit/{id}")
-//    public String showProviderFormToUpdate(@PathVariable("id") long id, Model model) {
-//        Provider provider = providerRepository.findById(id)
-//            .orElseThrow(()->new IllegalArgumentException("Invalid provider Id:" + id));
-//        model.addAttribute("provider", provider);
-//        return "provider/updateProvider";
-//    }
-//    @PostMapping("update/{id}")
-//    public String updateProvider(@PathVariable("id") long id, @Valid Provider provider, BindingResult result,
-//        Model model) {
-//        if (result.hasErrors()) {
-//            provider.setId(id);
-//            return "provider/updateProvider";
-//        }
-//        providerRepository.save(provider);
-//        model.addAttribute("providers", providerRepository.findAll());
-//        return "provider/listProviders";
-//    }
+    @GetMapping("edit/{id}")
+    public String showProviderFormToUpdate(@PathVariable("id") long id, Model model) {
+        Provider provider = providerRepository.findById(id)
+            .orElseThrow(()->new IllegalArgumentException("Invalid provider Id:" + id));
+        model.addAttribute("provider", provider);
+        return "provider/updateProvider";
+    }
+    @PostMapping("update/{id}")
+    public String updateProvider(@PathVariable("id") long id, @Valid Provider provider, BindingResult result,
+        Model model) {
+        if (result.hasErrors()) {
+            provider.setId(id);
+            return "provider/updateProvider";
+        }
+        providerRepository.save(provider);
+        model.addAttribute("providers", providerRepository.findAll());
+        return "provider/listProviders";
+    }
 
 
 }
