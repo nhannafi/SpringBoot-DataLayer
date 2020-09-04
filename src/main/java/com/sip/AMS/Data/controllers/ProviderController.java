@@ -40,9 +40,6 @@ public class ProviderController {
     	 model.addAttribute("provider", provider);
     	 return "provider/addProvider";
     }
-   
-
-    
     @PostMapping("add")
     public String addProvider(@Valid Provider provider, BindingResult result, Model model) {
         if (result.hasErrors()) {
@@ -52,16 +49,18 @@ public class ProviderController {
         return "redirect:list";
     }
     
-//    @GetMapping("delete/{id}")
-//    public String deleteProvider(@PathVariable("id") long id, Model model) {
-//        Provider provider = providerRepository.findById(id)
-//            .orElseThrow(()-> new IllegalArgumentException("Invalid provider Id:" + id));
-//        providerRepository.delete(provider);
-//        model.addAttribute("providers", providerRepository.findAll());
-//        return "provider/listProviders";
-//    }
-//    
-//    
+    @GetMapping("delete/{id}")
+    public String deleteProvider(@PathVariable("id") long id, Model model) {
+        Provider provider = providerRepository.findById(id)
+            .orElseThrow(()-> new IllegalArgumentException("Invalid provider Id:" + id));
+        providerRepository.delete(provider);
+        System.out.println("deleteddd");
+        model.addAttribute("providers", providerRepository.findAll());
+        return "provider/listProviders";
+       
+    }
+    
+    
     @GetMapping("edit/{id}")
     public String showProviderFormToUpdate(@PathVariable("id") long id, Model model) {
         Provider provider = providerRepository.findById(id)
@@ -73,7 +72,7 @@ public class ProviderController {
     public String updateProvider(@PathVariable("id") long id, @Valid Provider provider, BindingResult result,
         Model model) {
         if (result.hasErrors()) {
-            provider.setId(id);
+//            provider.setId(id);
             return "provider/updateProvider";
         }
         providerRepository.save(provider);

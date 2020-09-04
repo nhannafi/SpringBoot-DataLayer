@@ -8,7 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
-//import javax.validation.constraints.NotBlank;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 public class Provider {
@@ -17,14 +17,17 @@ public class Provider {
     private long id;
 
     @NotBlank(message = "Name is mandatory")
+    @Length(min = 2 , max = 50)
     @Column(name = "name")
     private String name;
     
     @NotBlank(message = "Address is mandatory")
+    @Length(min = 2 , max = 50)
     @Column(name = "address")
     private String address;
     
     @NotBlank(message = "Email is mandatory")
+    @Length(min = 2 , max = 50)
     @Column(name = "email")
     private String email;
 
